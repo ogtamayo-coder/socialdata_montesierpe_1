@@ -1,0 +1,357 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .dash { font-family: var(--font-sans); width: 100%; max-width: 100%; overflow-x: hidden; }
+
+  .brand-header {
+    background: #6B1A1A;
+    border-radius: var(--border-radius-lg);
+    padding: 24px 24px 20px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .brand-eyebrow {
+    font-size: 10px;
+    color: #C4A882;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .brand-title-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #F0ECE0;
+    font-family: Georgia, 'Times New Roman', serif;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .brand-title span {
+    color: #C4A882;
+    font-size: 16px;
+    font-style: italic;
+  }
+  .brand-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .brand-period {
+    font-size: 12px;
+    color: #F0ECE0;
+    opacity: 0.75;
+  }
+  .brand-channel {
+    font-size: 11px;
+    color: #C4A882;
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+  .brand-divider {
+    height: 0.5px;
+    background: #F0ECE0;
+    opacity: 0.15;
+    margin: 14px 0 0;
+  }
+
+  .invest-banner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .invest-card { border-radius: var(--border-radius-md); padding: 14px 16px; border: 0.5px solid var(--color-border-tertiary); }
+  .invest-card.total { background: #6B1A1A; border-color: #6B1A1A; }
+  .invest-card.meta-card { background: var(--color-background-secondary); }
+  .invest-card.tiktok-card { background: var(--color-background-secondary); }
+  .invest-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .invest-card.total .invest-label { color: #C4A882; }
+  .invest-value { font-size: 24px; font-weight: 500; color: var(--color-text-primary); line-height: 1.1; font-family: Georgia, serif; }
+  .invest-card.total .invest-value { color: #F0ECE0; }
+  .invest-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; }
+  .invest-card.total .invest-sub { color: #C4A882; }
+
+  .section-title {
+    font-size: 10px; font-weight: 500; color: var(--color-text-secondary);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 12px; margin-top: 1.5rem;
+    padding-bottom: 6px; border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .kpi { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; min-width: 0; }
+  .kpi-label { font-size: 10px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .kpi-value { font-size: 19px; font-weight: 500; color: var(--color-text-primary); line-height: 1.1; }
+  .kpi-sub { font-size: 10px; color: var(--color-text-secondary); margin-top: 3px; }
+  .kpi-value.c-red { color: #8B1A1A; }
+  .kpi-value.c-green { color: #2D5A0E; }
+
+  .campaigns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .camp-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; min-width: 0; }
+  .camp-card.active-card { border: 1px solid #9A7C50; grid-column: 1 / -1; }
+  .camp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 8px; }
+  .camp-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); line-height: 1.3; }
+  .camp-period { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .camp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+  .camp-stat-label { font-size: 10px; color: var(--color-text-secondary); }
+  .camp-stat-value { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .camp-stat-value.green { color: #2D5A0E; }
+  .camp-stat-value.red { color: #8B1A1A; }
+  .camp-stat-value.gold { color: #7A5E2A; }
+
+  .badge { display: inline-flex; align-items: center; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+  .badge-active { background: #C0DD97; color: #1E4008; }
+  .badge-off { background: var(--color-background-secondary); color: var(--color-text-secondary); border: 0.5px solid var(--color-border-tertiary); }
+  .badge-done { background: #B5D4F4; color: #0C3A6E; }
+
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1.5rem 0; }
+
+  .adset-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; table-layout: fixed; }
+  .adset-table th { font-size: 10px; font-weight: 500; color: var(--color-text-secondary); padding: 6px 8px; text-align: left; border-bottom: 0.5px solid var(--color-border-tertiary); letter-spacing: 0.04em; text-transform: uppercase; }
+  .adset-table td { padding: 8px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: middle; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .adset-table tr:last-child td { border-bottom: none; }
+
+  .pill { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .pill-green { background: #C0DD97; color: #1E4008; }
+  .pill-amber { background: #FAC775; color: #5A2E00; }
+  .pill-blue { background: #B5D4F4; color: #0C3A6E; }
+  .pill-red { background: #F7C1C1; color: #6B0000; }
+
+  .geo-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .geo-label { font-size: 11px; color: var(--color-text-secondary); min-width: 100px; max-width: 100px; }
+  .geo-bar-wrap { flex: 1; height: 5px; background: var(--color-background-secondary); border-radius: 3px; overflow: hidden; min-width: 0; }
+  .geo-bar { height: 100%; border-radius: 3px; background: #8B1A1A; }
+  .geo-value { font-size: 11px; font-weight: 500; color: var(--color-text-primary); min-width: 46px; text-align: right; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .insight-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; border-left: 2px solid #9A7C50; }
+  .insight-box p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+  .insight-box strong { color: var(--color-text-primary); font-weight: 500; }
+  .insight-box.alert-red { border-left-color: #8B1A1A; }
+  .insight-box.alert-green { border-left-color: #2D5A0E; }
+
+  .billing-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 10px; }
+  .billing-day { background: var(--color-background-secondary); border-radius: 6px; padding: 8px 6px; text-align: center; min-width: 0; }
+  .billing-day-date { font-size: 10px; color: var(--color-text-secondary); }
+  .billing-day-amount { font-size: 12px; font-weight: 500; color: var(--color-text-primary); margin-top: 2px; }
+  .billing-day.highlight { border: 1px solid #9A7C50; }
+  .billing-day.recarga { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); }
+
+  .footer-bar { margin-top: 1.5rem; padding: 12px 16px; border-radius: var(--border-radius-md); background: #6B1A1A; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .footer-bar span { font-size: 12px; color: #C4A882; }
+  .footer-bar strong { color: #F0ECE0; font-weight: 500; }
+</style>
+
+<div class="dash">
+  <h2 class="sr-only">Dashboard de rendimiento digital Montesierpe Casa Hacienda, abril a mayo 2026</h2>
+
+  <div class="brand-header">
+    <div class="brand-eyebrow">Performance Dashboard · Meta &amp; TikTok · 6 abr – 4 may 2026</div>
+    <div class="brand-title-row">
+      <div class="brand-title">
+        MONTESIERPE <span>Casa Hacienda</span><br>
+        Rendimiento digital — abril / mayo 2026
+      </div>
+      <div class="brand-right">
+        <div class="brand-period">Pauta activa + Orgánico</div>
+        <div class="brand-channel">Meta Ads · TikTok Ads · Facebook Orgánico</div>
+      </div>
+    </div>
+    <div class="brand-divider"></div>
+  </div>
+
+  <div class="invest-banner">
+    <div class="invest-card total">
+      <div class="invest-label">Inversión total ejecutada</div>
+      <div class="invest-value">S/ 174.52</div>
+      <div class="invest-sub">Meta + TikTok · Período completo</div>
+    </div>
+    <div class="invest-card meta-card">
+      <div class="invest-label">Meta Ads</div>
+      <div class="invest-value" style="color:#6B1A1A;">S/ 149.52</div>
+      <div class="invest-sub">3 campañas · S/ 12/día presupuesto</div>
+    </div>
+    <div class="invest-card tiktok-card">
+      <div class="invest-label">TikTok Ads</div>
+      <div class="invest-value" style="color:#2D5A0E;">S/ 25.00</div>
+      <div class="invest-sub">Pauta activada en el período</div>
+    </div>
+  </div>
+
+  <div class="section-title">Facturación diaria — Meta Ads (24 abr – 4 may)</div>
+  <div class="billing-grid">
+    <div class="billing-day"><div class="billing-day-date">24 abr</div><div class="billing-day-amount">S/ 11.59</div></div>
+    <div class="billing-day"><div class="billing-day-date">25 abr</div><div class="billing-day-amount">S/ 11.59</div></div>
+    <div class="billing-day"><div class="billing-day-date">26 abr</div><div class="billing-day-amount">S/ 19.07</div></div>
+    <div class="billing-day"><div class="billing-day-date">27 abr</div><div class="billing-day-amount">S/ 24.81</div></div>
+    <div class="billing-day"><div class="billing-day-date">28 abr</div><div class="billing-day-amount">S/ 18.42</div></div>
+    <div class="billing-day"><div class="billing-day-date">29 abr</div><div class="billing-day-amount">S/ 14.40</div></div>
+    <div class="billing-day"><div class="billing-day-date">30 abr</div><div class="billing-day-amount">S/ 10.03</div></div>
+    <div class="billing-day"><div class="billing-day-date">1 may</div><div class="billing-day-amount">S/ 14.35</div></div>
+    <div class="billing-day"><div class="billing-day-date">2 may</div><div class="billing-day-amount">S/ 13.69</div></div>
+    <div class="billing-day"><div class="billing-day-date">3 may</div><div class="billing-day-amount">S/ 4.28</div></div>
+    <div class="billing-day highlight"><div class="billing-day-date">4 may</div><div class="billing-day-amount">S/ 15.36</div></div>
+    <div class="billing-day recarga"><div class="billing-day-date">Recarga</div><div class="billing-day-amount" style="color:#2D5A0E;">+S/ 150</div></div>
+  </div>
+  <div style="font-size:11px; color:var(--color-text-secondary); margin-top:8px; padding:6px 10px; background:var(--color-background-secondary); border-radius:6px; line-height:1.6;">
+    Consumo real facturado: <strong style="color:var(--color-text-primary);">S/ 146.00</strong> · Recargas prepago: <strong style="color:var(--color-text-primary);">S/ 150.00</strong> (S/ 100 + S/ 50, 24 abr) · Diferencia vs plataforma: ~S/ 3.52
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-title">Alcance orgánico — Facebook (período completo)</div>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">Visualizaciones</div><div class="kpi-value c-red">16,700</div><div class="kpi-sub">↑ 100% vs período ant.</div></div>
+    <div class="kpi"><div class="kpi-label">Espectadores únicos</div><div class="kpi-value c-red">12,518</div><div class="kpi-sub">Alcance real de personas</div></div>
+    <div class="kpi"><div class="kpi-label">Interacciones</div><div class="kpi-value">178</div><div class="kpi-sub">Likes + cmts + compartidos</div></div>
+    <div class="kpi"><div class="kpi-label">Clics en enlace</div><div class="kpi-value">717</div><div class="kpi-sub">CTR orgánico est. ~4.3%</div></div>
+    <div class="kpi"><div class="kpi-label">Visitas al perfil</div><div class="kpi-value">864</div><div class="kpi-sub">Sesiones en página</div></div>
+    <div class="kpi"><div class="kpi-label">Nuevos seguidores</div><div class="kpi-value c-green">85</div><div class="kpi-sub">Neto (86 altas, 1 baja)</div></div>
+    <div class="kpi"><div class="kpi-label">Contactos nuevos</div><div class="kpi-value c-green">35</div><div class="kpi-sub">Vía mensajes últ. semana</div></div>
+    <div class="kpi"><div class="kpi-label">Posts publicados</div><div class="kpi-value">2</div><div class="kpi-sub">Reel gastro + Reel hacienda</div></div>
+  </div>
+
+  <div class="section-title">Contenido orgánico reciente</div>
+  <table class="adset-table" style="table-layout:auto;">
+    <thead>
+      <tr><th>Contenido</th><th>Fecha</th><th>Vistas</th><th>Likes</th><th>Cmts</th><th>Compartidos</th><th>Eng. rate</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:500;">Reel gastronómico</td>
+        <td style="color:var(--color-text-secondary);">1 may</td>
+        <td style="font-weight:500;">902</td><td>12</td><td>4</td><td>5</td>
+        <td><span class="pill pill-green">2.3%</span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:500;">Reel arquitectura / hacienda</td>
+        <td style="color:var(--color-text-secondary);">24 abr</td>
+        <td style="font-weight:500;">339</td><td>12</td><td>5</td><td>3</td>
+        <td><span class="pill pill-amber">5.9%</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+  <div class="section-title">Campañas pagadas — Meta Ads</div>
+  <div class="campaigns-grid">
+    <div class="camp-card">
+      <div class="camp-header">
+        <div>
+          <div class="camp-name">Campaña Tráfico · Reel N°1</div>
+          <div class="camp-period">24 abr – en curso · Tráfico · S/ 12/día</div>
+        </div>
+        <span class="badge badge-off">Desactivada</span>
+      </div>
+      <div class="camp-stats">
+        <div><div class="camp-stat-label">Conversaciones</div><div class="camp-stat-value gold">32</div></div>
+        <div><div class="camp-stat-label">CPR</div><div class="camp-stat-value">S/ 1.26</div></div>
+        <div><div class="camp-stat-label">Inversión</div><div class="camp-stat-value red">S/ 40.30</div></div>
+        <div><div class="camp-stat-label">Alcance</div><div class="camp-stat-value">20,684</div></div>
+        <div><div class="camp-stat-label">Impresiones</div><div class="camp-stat-value">26,566</div></div>
+        <div><div class="camp-stat-label">Frecuencia</div><div class="camp-stat-value">1.28</div></div>
+      </div>
+    </div>
+
+    <div class="camp-card">
+      <div class="camp-header">
+        <div>
+          <div class="camp-name">Promoción de seguidores</div>
+          <div class="camp-period">24 abr – 29 abr · Interacción · S/ 10/día</div>
+        </div>
+        <span class="badge badge-done">Completada</span>
+      </div>
+      <div class="camp-stats">
+        <div><div class="camp-stat-label">Visitas página</div><div class="camp-stat-value gold">119</div></div>
+        <div><div class="camp-stat-label">CPV</div><div class="camp-stat-value green">S/ 0.23</div></div>
+        <div><div class="camp-stat-label">Inversión</div><div class="camp-stat-value red">S/ 27.43</div></div>
+        <div><div class="camp-stat-label">Alcance</div><div class="camp-stat-value">4,885</div></div>
+        <div><div class="camp-stat-label">Impresiones</div><div class="camp-stat-value">5,325</div></div>
+        <div><div class="camp-stat-label">Frecuencia</div><div class="camp-stat-value">1.09</div></div>
+      </div>
+    </div>
+
+    <div class="camp-card active-card">
+      <div class="camp-header">
+        <div>
+          <div class="camp-name">INT | Prospecting | Abr–May 2026</div>
+          <div class="camp-period">Abr–May 2026 · Interacción · S/ 12/día · 2 conjuntos activos</div>
+        </div>
+        <span class="badge badge-active">Activa</span>
+      </div>
+      <div class="camp-stats" style="grid-template-columns: repeat(4, 1fr);">
+        <div><div class="camp-stat-label">Conversaciones</div><div class="camp-stat-value gold">81</div></div>
+        <div><div class="camp-stat-label">CPR promedio</div><div class="camp-stat-value">S/ 1.01</div></div>
+        <div><div class="camp-stat-label">Alcance</div><div class="camp-stat-value">5,744</div></div>
+        <div><div class="camp-stat-label">Inversión</div><div class="camp-stat-value red">S/ 81.79</div></div>
+      </div>
+      <div style="margin-top:12px; overflow-x:auto;">
+        <table class="adset-table" style="table-layout:auto; min-width:480px;">
+          <thead>
+            <tr><th>Conjunto</th><th>Estado</th><th>Conv.</th><th>CPR</th><th>Gasto</th><th>Benchmark CTR</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:500;">N°2 Lima + Lima Sur - Copia</td>
+              <td><span class="pill pill-green">Activo</span></td>
+              <td>47</td>
+              <td style="color:#2D5A0E; font-weight:500;">S/ 0.66</td>
+              <td>S/ 31.10</td>
+              <td><span class="pill pill-green">+250.89%</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:500;">N°1 Lima + Lima Sur Amplio</td>
+              <td><span class="pill pill-green">Activo</span></td>
+              <td>35</td>
+              <td style="color:#8B1A1A; font-weight:500;">S/ 1.45</td>
+              <td>S/ 50.69</td>
+              <td><span class="pill pill-amber">Tend. −30.46%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-title">Distribución geográfica — alcance pagado</div>
+  <div class="two-col">
+    <div>
+      <div style="font-size:11px; color:var(--color-text-secondary); margin-bottom:8px;">Reel N°1 — total 20,684 personas</div>
+      <div class="geo-row"><div class="geo-label">Lima Region</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:90%;"></div></div><div class="geo-value">18,631</div></div>
+      <div class="geo-row"><div class="geo-label">Ica Region</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:6%;"></div></div><div class="geo-value">1,260</div></div>
+      <div class="geo-row"><div class="geo-label">Ayacucho</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:3.5%;"></div></div><div class="geo-value">721</div></div>
+      <div class="geo-row"><div class="geo-label">Callao</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:1%;"></div></div><div class="geo-value">218</div></div>
+      <div class="geo-row"><div class="geo-label">Huancavelica</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:0.1%;"></div></div><div class="geo-value">21</div></div>
+    </div>
+    <div>
+      <div style="font-size:11px; color:var(--color-text-secondary); margin-bottom:8px;">Prospecting activa — últimos 30 días</div>
+      <div class="geo-row"><div class="geo-label">Lima Region</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:76%;"></div></div><div class="geo-value">4,118</div></div>
+      <div class="geo-row"><div class="geo-label">Ica Region</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:21%;"></div></div><div class="geo-value">1,136</div></div>
+      <div class="geo-row"><div class="geo-label">Callao</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:3%;"></div></div><div class="geo-value">166</div></div>
+      <div class="geo-row"><div class="geo-label">Huancavelica</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:0.02%;"></div></div><div class="geo-value">1</div></div>
+      <div class="geo-row"><div class="geo-label">Pasco</div><div class="geo-bar-wrap"><div class="geo-bar" style="width:0.02%;"></div></div><div class="geo-value">1</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-title">Alertas estratégicas</div>
+  <div class="two-col">
+    <div class="insight-box alert-green">
+      <p><strong>Conjunto N°2 supera benchmark.</strong> CTR 250.89% sobre industria con CPR S/ 0.66 vs S/ 1.45 del N°1. Acción inmediata: reasignar presupuesto completo al N°2.</p>
+    </div>
+    <div class="insight-box alert-green">
+      <p><strong>Audiencia 55+ con mayor intención.</strong> CTR hasta 13.32% en segmento maduro. Alineado con buyer persona de alto poder adquisitivo para turismo de experiencia.</p>
+    </div>
+    <div class="insight-box">
+      <p><strong>Ica como mercado secundario emergente.</strong> 6–21% del alcance pagado según campaña. Corredor Lunahuaná–Ica con demanda latente comprobada.</p>
+    </div>
+    <div class="insight-box alert-red">
+      <p><strong>Cadencia editorial insuficiente.</strong> Solo 2 publicaciones orgánicas en el período. El pico del 26 abr responde a activación de pauta, no a estrategia editorial sostenida.</p>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>Meta: <strong>S/ 149.52</strong> &nbsp;·&nbsp; TikTok: <strong>S/ 25.00</strong> &nbsp;·&nbsp; Total: <strong>S/ 174.52</strong></span>
+    <span>TikTok: sin datos de rendimiento disponibles para este período</span>
+  </div>
+</div>
